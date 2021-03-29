@@ -25,7 +25,6 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->command('pts:status')->everyMinute();
-         $schedule->command('pts:delate')->everyMinute();
     }
 
     /**

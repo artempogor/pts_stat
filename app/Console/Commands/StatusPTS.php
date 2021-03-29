@@ -40,26 +40,20 @@ class StatusPTS extends Command
      */
     public function handle()
     {
-        $add = new PTS;
-        foreach ($add as $adds)
-        {
-            $f = 'q';
-            $add->info = 1;
-            $add->save();
+        $ip = DB::table('pts_status')->pluck('ip','serial_pts');
+
+            foreach ($ip as $host) {
+                exec("ping -c 4 " . $host, $output, $result);
+                print_r($output);
+                if ($result == 0) {
+                    DB::table('pts_ip')->insert(['status' =>true, 'serial_pts' => '$ip']);
+                } else
+                    {
+                    echo 'не работает';
+                    DB::table('pts_ip')->insert(['status' =>false, 'serial_pts' => '$ip']);
+
+                }
+         }
         }
-//        $host="128.2.0.112";
-//        exec("ping -c 4 " . $host, $output, $result);
-//        print_r($output);
-//        if ($result == 0) {
-//            $add = new PTS;
-//            $add->status = 1;
-//            $add->save();
-//        }
-//        else {
-//            $add = new PTS;
-//            $add->status = 0;
-//            $add->save();
-//        }
-//        echo 'данные занесены!';
-    }
+
 }
