@@ -15,11 +15,18 @@ use App\Orchid\Screens\Role\RoleListScreen;
 use App\Orchid\Screens\User\UserEditScreen;
 use App\Orchid\Screens\User\UserListScreen;
 use App\Orchid\Screens\User\UserProfileScreen;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
-//====================================//
-use App\Orchid\Screens\PtsEditScreen;
+
+
+use App\Orchid\Screens\PtsStatusMoreScreen;
 use App\Orchid\Screens\PtsListScreen;
+use App\Orchid\Screens\PtsEditScreen;
+use App\Orchid\Screens\PtsStatusScreen;
+use App\Orchid\Screens\PtsMapsScreen;
+use App\Orchid\Screens\WorkersListScreen;
+use App\Orchid\Screens\WorkersEditScreen;
 /*
 |--------------------------------------------------------------------------
 | Dashboard Routes
@@ -31,8 +38,21 @@ use App\Orchid\Screens\PtsListScreen;
 |
 */
 //ПТС ЭКРАНЫ
-Route::screen('list/{list?}',PtsEditScreen::class)->name('pts.edit');
-Route::screen('lists',PtsListScreen::class)->name('pts.list');
+Route::screen('list/{lists?}',PtsEditScreen::class)->name('pts.edit');
+Route::screen('lists',PtsListScreen::class)->name('pts.lists');
+
+Route::screen('status/{status?}',PtsStatusMoreScreen::class)->name('pts.more')
+;
+Route::screen('statuses',PtsStatusScreen::class)->name('pts.status');
+
+Route::screen('maps',PtsMapsScreen::class)->name('pts.maps');
+//ПТС РАБОТНИКИ
+Route::screen('work/{workers?}',WorkersEditScreen::class)->name('workers.edit');
+Route::screen('workers',WorkersListScreen::class)->name('workers.lists');
+
+
+
+
 // Main
 Route::screen('/main', PlatformScreen::class)
     ->name('platform.main');

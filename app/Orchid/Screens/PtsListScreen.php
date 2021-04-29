@@ -1,10 +1,12 @@
 <?php
 
 namespace App\Orchid\Screens;
-use App\Orchid\Layouts\StatusLayout;
+use App\Orchid\Layouts\FiltersPTS;
+use App\Orchid\Layouts\ListPTSLayout;
 use App\Models\PTS;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Screen;
+use PHPUnit\Util\Filter;
 
 class PtsListScreen extends Screen
 {
@@ -30,8 +32,14 @@ class PtsListScreen extends Screen
     public function query(): array
     {
         return [
-            'pts'=>PTS::paginate()
-        ];
+            'pts'=>PTS::filters()
+            ->defaultSort('id')
+            ->paginate(6),
+//            'sort_pts'=>PTS::with('serial_pts')
+//                ->filters()
+//                ->filtersApplySelection(FiltersPTS::class)
+//                ->defaultSort('id', 'desc')
+            ];
     }
 
     /**
@@ -52,11 +60,12 @@ class PtsListScreen extends Screen
      * Views.
      *
      * @return \Orchid\Screen\Layout[]|string[]
+     * .
      */
     public function layout(): array
     {
         return [
-            StatusLayout::class
+            ListPTSLayout::class
         ];
     }
 }

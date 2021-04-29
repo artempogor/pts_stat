@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Orchid\Screens\User;
 
+use App\Orchid\Layouts\FiltersPTS;
 use App\Orchid\Layouts\User\UserEditLayout;
 use App\Orchid\Layouts\User\UserFiltersLayout;
 use App\Orchid\Layouts\User\UserListLayout;
@@ -45,7 +46,7 @@ class UserListScreen extends Screen
         return [
             'users' => User::with('roles')
                 ->filters()
-                ->filtersApplySelection(UserFiltersLayout::class)
+                ->filtersApplySelection(FiltersPTS::class)
                 ->defaultSort('id', 'desc')
                 ->paginate(),
         ];

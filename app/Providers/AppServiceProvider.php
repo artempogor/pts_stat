@@ -3,6 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Models\PTS;
+use App\Models\Status;
+use App\Orchid\Screens\PtsListScreen;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,8 +24,12 @@ class AppServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
-    {
-        //
-    }
+//    public function boot(PtsListScreen $pts)
+//    {
+//        $pts->registerSearch(
+//            [
+//                PTS::class,
+//            ]
+//        );
+//    }
 }

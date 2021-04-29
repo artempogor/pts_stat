@@ -24,7 +24,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('pts:status')->everyMinute();
+         $schedule->command('pts:delete')->hourly();
+         $schedule->command('pts:status')->everyFiveMinutes();
+
     }
 
     /**
@@ -39,3 +41,4 @@ class Kernel extends ConsoleKernel
         require base_path('routes/console.php');
     }
 }
+//home/pts_stat/web/test.pts-stat.bank.local/public_html

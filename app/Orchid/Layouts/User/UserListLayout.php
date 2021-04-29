@@ -43,6 +43,7 @@ class UserListLayout extends Table
                         ->modal('oneAsyncModal')
                         ->modalTitle($user->presenter()->title())
                         ->method('saveUser')
+                        ->icon('plus-alt')
                         ->asyncParameters([
                             'user' => $user->id,
                         ]);

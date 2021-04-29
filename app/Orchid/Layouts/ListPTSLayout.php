@@ -5,8 +5,9 @@ use App\Models\PTS;
 use Orchid\Screen\Actions\Link;
 use Orchid\Screen\Layouts\Table;
 use Orchid\Screen\TD;
+use Illuminate\Support\Str;
 
-class StatusLayout extends Table
+class ListPTSLayout extends Table
 {
     /**
      * Data source.
@@ -32,8 +33,9 @@ class StatusLayout extends Table
                         ->route('pts.edit', $pts);
                 }),
 
-            TD::make('serial_pts', 'Серийный номер')
+            TD::make('serial_pts', __('Серийный номер'))
                 ->sort()
+                ->filter(TD::FILTER_TEXT)
                 ->render(function (PTS $pts) {
                     return Link::make($pts->serial_pts)
                         ->route('pts.edit', $pts);
@@ -53,13 +55,12 @@ class StatusLayout extends Table
                     return Link::make($pts->ip)
                         ->route('pts.edit', $pts);
                 }),
-            TD::make('ip', 'Дополнительная информация')
+            TD::make('info', 'Дополнительная информация')
                 ->render(function (PTS $pts) {
-                    return Link::make($pts->info)
-                        ->route('pts.edit', $pts);
+                    return Str::title($pts->info);
                 }),
-            TD::make('created_at', 'Создано'),
-            TD::make('updated_at', 'Обновлено'),
+            TD::make('created_at', 'Создано')->defaultHidden(),
+            TD::make('updated_at', 'Обновлено')->defaultHidden(),
         ];
     }
 }

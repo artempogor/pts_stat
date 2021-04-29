@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use App\Models\PTS;
 use function GuzzleHttp\Promise\all;
@@ -40,20 +41,18 @@ class StatusPTS extends Command
      */
     public function handle()
     {
-        $ip = DB::table('pts_status')->pluck('ip','serial_pts');
+        $ptses = PTS::all();
+        foreach ($ptses as $pts)
+        {
+            exec("ping -c 4 " .$pts->ip, $output, $result);
+            if($result == 0)
+                $pts->statuses()->create(['serial_pts'=>$pts->serial_pts,'ip'=>$pts->ip,'status'=>'работает','checked_up'=>Carbon::now()]);
+            else
+                $pts->statuses()->create(['serial_pts'=>$pts->serial_pts,'ip'=>$pts->ip,'status'=>'не работает','checked_up'=>Carbon::now()]);
 
-            foreach ($ip as $host) {
-                exec("ping -c 4 " . $host, $output, $result);
-                print_r($output);
-                if ($result == 0) {
-                    DB::table('pts_ip')->insert(['status' =>true, 'serial_pts' => '$ip']);
-                } else
-                    {
-                    echo 'не работает';
-                    DB::table('pts_ip')->insert(['status' =>false, 'serial_pts' => '$ip']);
+            print_r($pts->serial_pts);
+        }
 
-                }
-         }
         }
 
 }

@@ -4,6 +4,7 @@ namespace App\Orchid\Screens;
 use App\Models\User;
 use App\Models\PTS;
 use Illuminate\Http\Request;
+use Orchid\Screen\Actions\Link;
 use Orchid\Support\Facades\Alert;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
@@ -56,6 +57,9 @@ class PtsEditScreen extends Screen
     public function commandBar(): array
     {
         return [
+            Link::make('Вернутся к остальным')
+                ->icon('action-undo')
+                ->route('pts.lists'),
             Button::make('Создать запись')
                 ->icon('pencil')
                 ->method('createOrUpdate')
@@ -85,7 +89,7 @@ class PtsEditScreen extends Screen
                 Input::make('pts.serial_pts')
                     ->title('Cерийный номер')
                     ->placeholder('####')
-                    ->required()
+                    ->required( )
                     ->help('Введите порядковый номер '),
 
                 Input::make('pts.address')
@@ -100,16 +104,15 @@ class PtsEditScreen extends Screen
                     ->help('Введите IP адресс '),
 
                 Select::make('pts.city')
-                    ->empty('Донецк', 0)
+                    ->empty('Донецк',  'Донецк')
                     ->options([
-                        1 => 'Горловка',
-                        2 => 'Макеевка',
+                         'Горловка' => 'Горловка',
+                         'Макеевка'=> 'Макеевка',
                     ]),
 
 
-
-
             Quill::make('pts.info')
+                ->toolbar(["text","header", "list", "media"])
                 ->title('Main text'),
 
         ])
@@ -119,7 +122,7 @@ class PtsEditScreen extends Screen
     {
         $request->validate(
             [
-                'pts.serial_pts'=>'required|max:4|unique:pts_status,serial_pts',
+                'pts.serial_pts'=>'required|unique:pts,serial_pts,'.$pts->id,
                 'pts.address'=>'required|max:50',
                 'pts.ip'=>'required|ip',
             ]);
@@ -127,7 +130,7 @@ class PtsEditScreen extends Screen
 
     $pts->fill($request->get('pts'))->save();
     Alert::info('Вы успешно обновили запись!');
-    return redirect()->route('pts.list');
+    return redirect()->route('pts.lists');
 
     }
     public function remove(PTS $pts)
