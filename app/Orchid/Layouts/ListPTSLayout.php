@@ -59,8 +59,16 @@ class ListPTSLayout extends Table
                 ->render(function (PTS $pts) {
                     return Str::title($pts->info);
                 }),
-            TD::make('created_at', 'Создано')->defaultHidden(),
-            TD::make('updated_at', 'Обновлено')->defaultHidden(),
+            TD::make('updated_at', __('Созданно'))
+                ->sort()
+                ->render(function (PTS $pts) {
+                    return $pts->created_at->toDateTimeString();
+                }),
+            TD::make('updated_at', __('Обновлено'))
+                ->sort()
+                ->render(function (PTS $pts) {
+                    return $pts->updated_at->toDateTimeString();
+                }),
         ];
     }
 }
