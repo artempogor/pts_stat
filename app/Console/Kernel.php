@@ -24,9 +24,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->command('pts:delete')->monthly();
          $schedule->command('pts:status')->everyFiveMinutes();
-
+        $schedule->command('pts:delete')->monthly();
     }
 
     /**

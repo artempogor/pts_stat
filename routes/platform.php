@@ -18,7 +18,7 @@ use App\Orchid\Screens\User\UserProfileScreen;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
-
+use App\Http\Controllers\PtsExportController;
 
 use App\Orchid\Screens\PtsStatusMoreScreen;
 use App\Orchid\Screens\PtsListScreen;
@@ -37,6 +37,8 @@ use App\Orchid\Screens\WorkersEditScreen;
 | contains the need "dashboard" middleware group. Now create something great!
 |
 */
+//ПТС Импорт/экспорт
+Route::get('export', [PtsExportController::class,'export'])->name('pts.export');
 //ПТС ЭКРАНЫ
 Route::screen('list/{lists?}',PtsEditScreen::class)->name('pts.edit');
 Route::screen('lists',PtsListScreen::class)->name('pts.lists');
