@@ -57,7 +57,7 @@ class ListPTSLayout extends Table
                 }),
             TD::make('info', 'Дополнительная информация')
                 ->render(function (PTS $pts) {
-                    return Str::title($pts->info);
+                    return Str::limit(($pts->info),100);
                 }),
             TD::make('updated_at', __('Созданно'))
                 ->sort()

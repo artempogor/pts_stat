@@ -66,7 +66,7 @@ class ExampleCardsScreen extends Screen
                  */
                 public function color(): ?Color
                 {
-                    return Color::INFO();
+                    return Color::DANGER();
                 }
 
                 /**
@@ -94,7 +94,7 @@ class ExampleCardsScreen extends Screen
                     return new Compendium([
                         'Type'                               => 'electric stove',
                         'Model'                              => 'dream 251CH',
-                        'Main color'                         => 'white',
+                        'Main color'                         => 'black',
                         'Complementary color'                => 'none',
                         'Color declared by the manufacturer' => 'white',
                     ]);
@@ -113,7 +113,7 @@ class ExampleCardsScreen extends Screen
                  */
                 public function color(): ?Color
                 {
-                    return Color::SUCCESS();
+                    return Color::DANGER();
                 }
 
                 /**

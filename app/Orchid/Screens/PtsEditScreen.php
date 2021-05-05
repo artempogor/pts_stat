@@ -3,8 +3,10 @@
 namespace App\Orchid\Screens;
 use App\Models\User;
 use App\Models\PTS;
+use App\Orchid\Layouts\PtsMaps;
 use Illuminate\Http\Request;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Map;
 use Orchid\Support\Facades\Alert;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Fields\Input;
@@ -115,6 +117,9 @@ class PtsEditScreen extends Screen
                 ->toolbar(["text","header", "list", "media"])
                 ->title('Main text'),
 
+                PtsMaps::make('pts.place')
+                    ->title('ПТС на карте')
+                    ->help('Введите/проверьте координаты на карте'),
         ])
         ];
     }

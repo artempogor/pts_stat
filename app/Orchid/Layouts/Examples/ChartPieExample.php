@@ -30,5 +30,5 @@ class ChartPieExample extends Chart
     /**
      * @var string
      */
-    protected $target = 'charts';
+    protected $target = 'pts_work_charts';
 }

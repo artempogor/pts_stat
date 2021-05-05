@@ -29,8 +29,6 @@ class PTS extends Model
                 'city',
                 'address',
                 'status',
-                'latitude',
-                'longitude',
                 'info',
             ];
         protected $fillable = [
@@ -39,10 +37,12 @@ class PTS extends Model
             'city',
             'address',
             'status',
-            'latitude',
-            'longitude',
             'info',
+            'place',
         ];
+    protected $casts = [
+        'place' => 'array',
+    ];
 //        public function presenter()
 //        {
 //            return new IdeaPresenter($this);

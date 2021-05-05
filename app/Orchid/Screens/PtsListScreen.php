@@ -5,6 +5,7 @@ use App\Orchid\Layouts\FiltersPTS;
 use App\Orchid\Layouts\ListPTSLayout;
 use App\Models\PTS;
 use Orchid\Screen\Actions\Link;
+use Orchid\Support\Facades\Layout;
 use Orchid\Screen\Screen;
 use PHPUnit\Util\Filter;
 
@@ -65,7 +66,7 @@ class PtsListScreen extends Screen
     public function layout(): array
     {
         return [
-            ListPTSLayout::class
+            ListPTSLayout::class,
         ];
     }
 }
