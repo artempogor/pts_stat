@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use Tabuna\Breadcrumbs\Trail;
 use App\Http\Controllers\PtsExportController;
-
+use App\Http\Controllers\PtsImportController;
 use App\Orchid\Screens\PtsStatusMoreScreen;
 use App\Orchid\Screens\PtsListScreen;
 use App\Orchid\Screens\PtsEditScreen;
@@ -39,18 +39,20 @@ use App\Orchid\Screens\WorkersEditScreen;
 */
 //ПТС Импорт/экспорт
 Route::get('export', [PtsExportController::class,'export'])->name('pts.export');
+Route::get('import', [PtsImportController::class,'import'])->name('pts.import');
+
 //ПТС ЭКРАНЫ
-Route::screen('list/{lists?}',PtsEditScreen::class)->name('pts.edit');
+Route::screen('list/{lists?}',PtsEditScreen::class)->middleware('access:create_pts')->name('pts.edit');
 Route::screen('lists',PtsListScreen::class)->name('pts.lists');
 
 Route::screen('status/{status?}',PtsStatusMoreScreen::class)->name('pts.more')
 ;
 Route::screen('statuses',PtsStatusScreen::class)->name('pts.status');
 
-Route::screen('maps',PtsMapsScreen::class)->name('pts.maps');
+Route::screen('maps',PtsMapsScreen::class)->middleware('access:maps')->name('pts.maps');
 //ПТС РАБОТНИКИ
 Route::screen('work/{workers?}',WorkersEditScreen::class)->name('workers.edit');
-Route::screen('workers',WorkersListScreen::class)->name('workers.lists');
+Route::screen('workers',WorkersListScreen::class)->middleware('access:workers')->name('workers.lists');
 
 
 

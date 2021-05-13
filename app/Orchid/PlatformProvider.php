@@ -2,6 +2,7 @@
 
 namespace App\Orchid;
 
+use Illuminate\Support\Facades\Auth;
 use Orchid\Platform\Dashboard;
 use Orchid\Platform\ItemMenu;
 use Orchid\Platform\ItemPermission;
@@ -46,41 +47,22 @@ class PlatformProvider extends OrchidServiceProvider
                 ->route('pts.status')
                 ->place('example-menu')
                 ->icon('power'),
-
-            ItemMenu::label('Карта')
-                ->route('pts.maps')
-                ->place('example-menu')
-                ->icon('map'),
-
+                ItemMenu::label('Карта')
+                    ->permission('maps')
+                    ->place('example-menu')
+                    ->icon('map')
+                    ->route('pts.maps'),
             ItemMenu::label('Справочник работников')
                 ->route('workers.lists')
                 ->icon('user-follow'),
-
-            ItemMenu::label('Example screen')
-                ->icon('monitor')
-                ->route('platform.example')
-                ->title('Navigation'),
-
 
 
 
             ItemMenu::label('Chart tools')
                 ->icon('bar-chart')
-                ->route('platform.example.charts'),
+                ->route('platform.example.charts')
+                ->title('Примеры:'),
 
-
-
-            ItemMenu::label('Documentation')
-                ->title('Docs')
-                ->icon('docs')
-                ->url('https://orchid.software/en/docs'),
-
-            ItemMenu::label('Changelog')
-                ->icon('shuffle')
-                ->url('https://github.com/orchidsoftware/platform/blob/master/CHANGELOG.md')
-                ->badge(function () {
-                    return Dashboard::version();
-                }, Color::LIGHT()),
         ];
     }
 
@@ -102,28 +84,28 @@ class PlatformProvider extends OrchidServiceProvider
     public function registerSystemMenu(): array
     {
         return [
-            ItemMenu::label(__('Access rights'))
+            ItemMenu::label(__('Права доступа'))
                 ->icon('lock')
                 ->slug('Auth')
                 ->active('platform.systems.*')
                 ->permission('platform.systems.index')
                 ->sort(1000),
 
-            ItemMenu::label(__('Users'))
+            ItemMenu::label(__('Пользователь'))
                 ->place('Auth')
                 ->icon('user')
                 ->route('platform.systems.users')
                 ->permission('platform.systems.users')
                 ->sort(1000)
-                ->title(__('All registered users')),
+                ->title(__('Все пользователи')),
 
-            ItemMenu::label(__('Roles'))
+            ItemMenu::label(__('Роли'))
                 ->place('Auth')
                 ->icon('lock')
                 ->route('platform.systems.roles')
                 ->permission('platform.systems.roles')
                 ->sort(1000)
-                ->title(__('A Role defines a set of tasks a user assigned the role is allowed to perform.')),
+                ->title(__('Роль определяет набор задач, которые пользователь, назначенный этой роли, может выполнять.')),
         ];
     }
 

@@ -27,14 +27,14 @@ class UserEditScreen extends Screen
      *
      * @var string
      */
-    public $name = 'Edit User';
+    public $name = 'Изменение профиля';
 
     /**
      * Display header description.
      *
      * @var string
      */
-    public $description = 'Details such as name, email and password';
+    public $description = 'Изменение учетной записи, пароля и логина';
 
     /**
      * @var string

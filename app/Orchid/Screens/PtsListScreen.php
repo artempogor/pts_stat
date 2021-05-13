@@ -5,9 +5,15 @@ use App\Exports\PtsExport;
 use App\Orchid\Layouts\FiltersPTS;
 use App\Orchid\Layouts\ListPTSLayout;
 use App\Models\PTS;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Facades\Excel;
 use Orchid\Screen\Actions\Button;
 use Orchid\Screen\Actions\Link;
+use Orchid\Screen\Fields\Cropper;
+use Orchid\Screen\Fields\Group;
+use Orchid\Screen\Fields\Input;
+use Orchid\Screen\Fields\Upload;
 use Orchid\Support\Color;
 use Orchid\Support\Facades\Layout;
 use Orchid\Screen\Screen;
@@ -57,19 +63,10 @@ class PtsListScreen extends Screen
     {
         return [
             Link::make('Создать запись')
+                ->canSee(Auth::user()->hasAccess('create_pts'))
                 ->icon('pencil')
                 ->route('pts.edit'),
-            Button::make(__('Экспорт в Exel'))
-                ->type(Color::DEFAULT())
-                ->icon('printer')
-                ->method('export'),
-
-        ];
-    }
-    public function export()
-    {
-         Excel::download(new PtsExport, 'pts.xlsx');
-        Toast::info(__('Profile updated.'));
+            ];
     }
     /**
      * Views.
@@ -81,6 +78,17 @@ class PtsListScreen extends Screen
     {
         return [
             ListPTSLayout::class,
-        ];
+            Layout::collapse([
+                Input::make( 'file')
+                    ->type('file')
+                    ->horizontal()
+                    ->title('Файл для импорта :'),
+                Link::make(__('Экспорт в Exel'))
+                    ->icon('printer')
+                    ->horizontal()
+                    ->rawClick()
+                    ->title('Файл для экспорта :')
+                ->route('pts.export'),
+            ])->label('Нажмите для импорта/файлов')];
     }
 }
