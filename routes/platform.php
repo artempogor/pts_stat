@@ -42,7 +42,7 @@ Route::get('export', [PtsExportController::class,'export'])->name('pts.export');
 Route::get('import', [PtsImportController::class,'import'])->name('pts.import');
 
 //ПТС ЭКРАНЫ
-Route::screen('list/{lists?}',PtsEditScreen::class)->middleware('access:create_pts')->name('pts.edit');
+Route::screen('list/{lists?}',PtsEditScreen::class)->name('pts.edit');
 Route::screen('lists',PtsListScreen::class)->name('pts.lists');
 
 Route::screen('status/{status?}',PtsStatusMoreScreen::class)->name('pts.more')
