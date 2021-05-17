@@ -130,6 +130,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/markbaker/complex" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/markbaker/matrix" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/maennchen/zipstream-php" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/adldap2/adldap2-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/adldap2/adldap2" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tightenco/collect" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
