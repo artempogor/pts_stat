@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\PtsImportController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -17,3 +17,4 @@ Route::redirect('/', '/admin/lists');
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/import', [PtsImportController::class,'import'])->name('pts.import');

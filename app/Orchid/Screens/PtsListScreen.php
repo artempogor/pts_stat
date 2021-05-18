@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Orchid\Screens;
+use App\Imports\PtsImport;
 use App\Exports\PtsExport;
 use App\Orchid\Layouts\FiltersPTS;
 use App\Orchid\Layouts\ListPTSLayout;
@@ -19,6 +20,7 @@ use Orchid\Support\Facades\Layout;
 use Orchid\Screen\Screen;
 use Orchid\Support\Facades\Toast;
 use PHPUnit\Util\Filter;
+use Orchid\Support\Facades\Alert;
 
 class PtsListScreen extends Screen
 {
@@ -41,7 +43,8 @@ class PtsListScreen extends Screen
      *
      * @return array
      */
-    public function query(): array
+
+    public function query(Request $request): array
     {
         return [
             'pts'=>PTS::filters()
@@ -51,6 +54,7 @@ class PtsListScreen extends Screen
 //                ->filters()
 //                ->filtersApplySelection(FiltersPTS::class)
 //                ->defaultSort('id', 'desc')
+        'file' =>$request
             ];
     }
 
@@ -79,10 +83,18 @@ class PtsListScreen extends Screen
         return [
             ListPTSLayout::class,
             Layout::collapse([
-                Input::make( 'file')
+                Input::make( 'file.files')
                     ->type('file')
+                    ->horizontal(),
+//                Upload::make( 'files.files')
+//                    ->acceptedFiles('application/*')
+//                    ->horizontal()
+//                    ->title('Файл для импорта :')
+//                     ->method('import'),
+                Button::make('Импортировать')
+                    ->icon('brush')
                     ->horizontal()
-                    ->title('Файл для импорта :'),
+                    ->method('import'),
                 Link::make(__('Экспорт в Exel'))
                     ->icon('printer')
                     ->horizontal()
@@ -90,5 +102,22 @@ class PtsListScreen extends Screen
                     ->title('Файл для экспорта :')
                 ->route('pts.export'),
             ])->label('Нажмите для импорта/файлов')];
+    }
+    public function import(Request $request)
+
+    {
+       // dd(request()->file('file.files'));
+        if (empty(request()->file('file.files')))
+        {
+
+            Alert::error('Вы не прикрепили файл!');
+            return redirect('/')->with(('Вы не прикрепили файл!'));
+
+        }
+        else{
+        Excel::import(new PtsImport(), request()->file('file.files'));
+            Alert::success('Файл успешно загружен');
+        return redirect('/');
+        }
     }
 }

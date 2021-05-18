@@ -10,14 +10,17 @@ use Orchid\Screen\AsSource;
 use App\Models\Status;
 use Orchid\Metrics\Chartable;
 use Carbon\Carbon;
+use Orchid\Attachment\Attachable;
 use Orchid\Filters\Filter;
 class PTS extends Model
 {
-   use Filterable;
+    use Filterable;
     use Chartable;
     use AsSource;
+    use Attachable;
 
-        protected $table = 'pts';
+
+    protected $table = 'pts';
         protected $allowedFilters = [
             'serial_pts',
 
