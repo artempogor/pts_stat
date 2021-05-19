@@ -14,8 +14,8 @@ class CreatePtsStatusTable extends Migration
     public function up()
     {
         Schema::create('pts_status', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('pts_id')->constrained('pts');
+            $table->id()->nullable();
+            $table->foreignId('pts_id')->nullable()->constrained('pts')->onDelete('cascade');
             $table->text('serial_pts')->nullable();
             $table->string('ip')->nullable();
             $table->string('status')->nullable();

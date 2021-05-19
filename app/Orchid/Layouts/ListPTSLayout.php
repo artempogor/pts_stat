@@ -18,7 +18,14 @@ class ListPTSLayout extends Table
      * @var string
      */
     protected $target = 'pts';
-
+    protected function striped(): bool
+    {
+        return true;
+    }
+    protected function onEachSide(): int
+    {
+        return 3;
+    }
     /**
      * Get the table cells to be displayed.
      *
@@ -35,30 +42,15 @@ class ListPTSLayout extends Table
 
             TD::make('serial_pts', __('Серийный номер'))
                 ->sort()
-                ->filter(TD::FILTER_TEXT)
-                ->render(function (PTS $pts) {
-                    return Link::make($pts->serial_pts)
-                        ->route('pts.edit', $pts);
-                }),
-            TD::make('city', 'Город')
-                ->render(function (PTS $pts) {
-                    return Link::make($pts->city)
-                        ->route('pts.edit', $pts);
-                }),
-            TD::make('address', 'Адресс')
-                ->render(function (PTS $pts) {
-                    return Link::make($pts->address)
-                        ->route('pts.edit', $pts);
-                }),
-            TD::make('ip', 'IP')
-                ->render(function (PTS $pts) {
-                    return Link::make($pts->ip)
-                        ->route('pts.edit', $pts);
-                }),
+                ->filter(TD::FILTER_TEXT),
+            TD::make('city', 'Город'),
+            TD::make('address', 'Адресс'),
+            TD::make('ip', 'IP'),
             TD::make('info', 'Дополнительная информация')
                 ->render(function (PTS $pts) {
                     return Str::limit(($pts->info),100);
-                }),
+                })
+                ->width('100px'),
             TD::make('updated_at', __('Созданно'))
                 ->sort()
                 ->render(function (PTS $pts) {

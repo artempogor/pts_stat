@@ -38,6 +38,6 @@ class DeletePTS extends Command
      */
     public function handle()
     {
-        Status::truncate();
+        Status::query()->delete();
     }
 }

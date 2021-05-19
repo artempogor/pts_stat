@@ -10,7 +10,7 @@ class PtsImportController extends Controller
 {
     public function import(Request $request)
     {
-        dd(request()->file('files'));
+     //   dd(request()->file('files'));
         Excel::import(new PtsImport(), request()->file('files'));
         return redirect('/')->with('success', 'All good!');
     }

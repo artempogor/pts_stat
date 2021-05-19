@@ -3,6 +3,7 @@
 namespace App\Orchid\Screens;
 use App\Imports\PtsImport;
 use App\Exports\PtsExport;
+use App\Models\Status;
 use App\Orchid\Layouts\FiltersPTS;
 use App\Orchid\Layouts\ListPTSLayout;
 use App\Models\PTS;
@@ -43,17 +44,18 @@ class PtsListScreen extends Screen
      *
      * @return array
      */
+    protected function striped(): bool
+    {
+        return true;
+    }
 
     public function query(Request $request): array
     {
         return [
             'pts'=>PTS::filters()
             ->defaultSort('id')
-            ->paginate(6),
-//            'sort_pts'=>PTS::with('serial_pts')
-//                ->filters()
-//                ->filtersApplySelection(FiltersPTS::class)
-//                ->defaultSort('id', 'desc')
+            ->paginate(10),
+
         'file' =>$request
             ];
     }
@@ -86,15 +88,14 @@ class PtsListScreen extends Screen
                 Input::make( 'file.files')
                     ->type('file')
                     ->horizontal(),
-//                Upload::make( 'files.files')
-//                    ->acceptedFiles('application/*')
-//                    ->horizontal()
-//                    ->title('Файл для импорта :')
-//                     ->method('import'),
-                Button::make('Импортировать')
+                Button::make('Импортировать и обновить')
+                    ->icon('history')
+                    ->horizontal()
+                    ->method('importUpdate'),
+                Button::make('Удалить и импортировать')
                     ->icon('brush')
                     ->horizontal()
-                    ->method('import'),
+                    ->method('importNew'),
                 Link::make(__('Экспорт в Exel'))
                     ->icon('printer')
                     ->horizontal()
@@ -103,21 +104,42 @@ class PtsListScreen extends Screen
                 ->route('pts.export'),
             ])->label('Нажмите для импорта/файлов')];
     }
-    public function import(Request $request)
+
+    public function importNew(Request $request)
 
     {
        // dd(request()->file('file.files'));
         if (empty(request()->file('file.files')))
         {
-
-            Alert::error('Вы не прикрепили файл!');
-            return redirect('/')->with(('Вы не прикрепили файл!'));
+            Toast::error('Вы не приеркпили файл для импорта!')
+                ->delay(5000);
+            return back();
 
         }
         else{
+        PTS::query()->delete();
+        Status::query()->delete();
         Excel::import(new PtsImport(), request()->file('file.files'));
-            Alert::success('Файл успешно загружен');
-        return redirect('/');
+        Toast::success('Файл успешно загружен!')
+                ->delay(5000);
+            return back();
+        }
+    }
+    public function importUpdate(Request $request)
+
+    {
+        if (empty(request()->file('file.files')))
+        {
+            Toast::error('Вы не приеркпили файл для импорта!')
+                ->delay(5000);
+            return back();
+
+        }
+        else{
+            Excel::import(new PtsImport(), request()->file('file.files'));
+            Toast::success('Файл успешно загружен!')
+                ->delay(5000);
+            return back();
         }
     }
 }

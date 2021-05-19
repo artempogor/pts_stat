@@ -39,7 +39,9 @@ use App\Orchid\Screens\WorkersEditScreen;
 */
 //ПТС Импорт/экспорт
 Route::get('export', [PtsExportController::class,'export'])->name('pts.export');
-Route::post('import', [PtsImportController::class,'import'])->name('pts.import');
+
+//ТЕСТОВЫЕ РОУТЫ ДЛЯ ИМПОРТА
+//Route::post('import', [PtsImportController::class,'import'])->name('pts.import');
 //Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 

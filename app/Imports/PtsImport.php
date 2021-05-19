@@ -5,6 +5,7 @@ namespace App\Imports;
 use App\Models\PTS;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Orchid\Attachment\Attachable;
+use Maatwebsite\Excel\Concerns\WithUpserts;
 class PtsImport implements ToModel
 {
     /**
